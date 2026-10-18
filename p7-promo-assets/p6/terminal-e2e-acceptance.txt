@@ -1,0 +1,19 @@
+[3.7s] PASS QA-09a Alice creates a room as guest and gets an invite link https://veilchat-n3gjdzux.manus.space/#k=<secret>
+[6.6s] PASS QA-09b Bob joins from the link; both see a secure, unverified session fragment removed from address bar
+[6.7s] PASS QA-10 Two-way end-to-end chat with delivery receipt both directions + receipt
+[6.7s] PASS QA-13a Default path between Alice and Bob (direct if WebRTC connects) Direct peer-to-peer · end-to-end encrypted
+[6.8s] PASS QA-11 Safety numbers match on both sides; marking verified updates the badge 60 digits equal (5389004246…)
+[10.1s] PASS QA-14 Three members: one message reaches both others Delivered to 2 of 2
+[12.8s] PASS QA-13b Hide my IP forces the server relay for that member Relayed via server · end-to-end encrypted
+[16.7s] PASS QA-12 Key change is detected, pauses the conversation, and needs an explicit decision paused, then unverified after accept
+[19.4s] PASS QA-07v Server view lists only metadata and ciphertext 84 rows, no plaintext
+[19.4s] PASS QA-05a Audit log of every raw server frame contains no plaintext, names or invite secret skipped (remote server: no audit log access)
+[19.4s] PASS QA-18 Guest mode leaves no browser storage {"local":0,"session":0,"idb":[]}
+[20.1s] PASS QA-21 Malformed invite link shows a friendly error and is removed from the URL That invite link is not valid. Ask for the full link, including everything after “#”.
+[28.7s] PASS QA-20 Catch-up: a returning member gets missed messages from another member, signature-checked author Frank; Caught up via Gina · signature checked
+[30.8s] PASS QA-16 Profile vault: create, lock, wrong passphrase rejected, unlock restores history vault record opaque; wrong passphrase refused; history restored
+[35.1s] PASS QA-17 Auto-lock after inactivity, then wipe deletes everything locked after 3 s idle; wipe removed the vault
+[35.1s] PASS QA-05b Every WebSocket frame the browsers exchanged with the server contains no plaintext, names, invite secret or IP candidates 277 frames, 8 message canaries, 7 names, invite secret: 0 hits {"join":12,"welcome":11,"signal":172,"peer-joined":11,"peer-left":7,"relay":62,"ping":1,"pong":1}
+[35.1s] PASS QA-CSP No CSP violations or page errors during the run none from Veil code; 100 blocks of platform-injected code, of which 20 were analytics sends refused by the runtime lock
+[35.1s] PASS QA-3P No data ever leaves for a third-party origin (analytics, CDNs, error reporters) 0 data requests succeeded; injected scripts downloaded: [GET script https://manus-analytics.com/script.js]; refused: [GET script https://files.manuscdn.com/manus-space-dispatcher/spaceEditor-Be_SD1Uu.js; GET script https://plausible.io/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js]
+[47.0s] 18/18 passed

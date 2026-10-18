@@ -1,0 +1,46 @@
+PASS  S0 no plugins -> NO_PROVIDER (host has no built-in model)
+PASS  S1 install leaves plugin disabled
+PASS  S1 inspect shows ungranted permissions with risk
+PASS  S2 enable without grant is refused
+PASS  S2 enable --yes grants and reports sandbox
+PASS  S3 offline run makes a real fs-tools call
+PASS  S5 crash -> PLUGIN_CRASHED with exit code and stderr tail
+PASS  S5 other plugins unaffected after a crash
+PASS  S5 list shows the crash
+PASS  S5 3 crashes/60s -> circuit open
+PASS  S5 restart resets the circuit
+PASS  S6 hang -> TIMEOUT and process killed
+PASS  S6 timeout fires in under 4s
+PASS  S6 plugin usable again after the kill
+PASS  S7 incompatible plugin installs with a warning
+PASS  S7 enable refused, naming both versions
+PASS  S8 fs outside grants denied
+PASS  S8 direct network denied
+PASS  S8 brokered network to undeclared host denied
+PASS  S8 secret not granted denied
+PASS  S8 process spawn denied
+PASS  S8 plugin env is scrubbed
+PASS  S8 no secrets in plugin env
+PASS  S9 revoke takes effect on next call
+PASS  S9 re-grant restores access
+PASS  S10 audit-trail guard blocks write_file
+PASS  S10 blocked write did not happen
+PASS  S10 audit command (plugin-contributed) reports it
+PASS  S10 failing guard hook fails closed
+PASS  S10 disabling the guard restores writes
+PASS  AC-05 invalid config rejected by schema
+PASS  FR-05 update with new permission requires re-approval
+PASS  DX create scaffolds a plugin
+PASS  DX validate passes for scaffold
+PASS  DX first plugin works end to end
+PASS  AC-01 validate reports field-level errors
+PASS  doctor reports sandbox mode
+PASS  FR-17 exec plugin requires the unsandboxed grant
+PASS  FR-17 exec plugin enabled with explicit consent
+PASS  FR-17 Python plugin tool works through the host
+PASS  Node fallback still denies direct network (guard)
+PASS  Node fallback is labelled weaker isolation
+PASS  AC-00 live LLM makes real tool calls
+PASS  AC-00 live run: guard blocked the write
+PASS  AC-00 no key material in logs or run records
+e2e: 45 passed, 0 failed

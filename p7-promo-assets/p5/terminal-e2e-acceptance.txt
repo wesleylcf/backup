@@ -1,0 +1,42 @@
+
+> termctl@0.1.0 test
+> npm run build && vitest run
+
+
+> termctl@0.1.0 build
+> tsc -p tsconfig.json && chmod +x dist/cli.js
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.5 [39m[90m/Users/wesley/Documents/manus/p5-mcp-terminal/.worktrees/termctl[39m
+
+ [32m✓[39m test/e2e.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 26966[2mms[22m[39m
+   [32m✓[39m MCP over Streamable HTTP [2m(7)[22m
+     [33m[2m✓[22m[39m drives an interactive REPL (AC-03)[33m 461[2mms[22m[39m
+     [33m[2m✓[22m[39m keeps sessions across client disconnects and lets another client resume from a cursor (AC-10)[33m 5246[2mms[22m[39m
+   [32m✓[39m crash recovery [2m(1)[22m
+     [33m[2m✓[22m[39m kills orphaned session processes after a server crash and reports them as lost (FR-D4)[33m 2072[2mms[22m[39m
+   [32m✓[39m stdio adapter [2m(3)[22m
+     [33m[2m✓[22m[39m falls back to an embedded in-process server when the background server cannot start[33m 4972[2mms[22m[39m
+     [33m[2m✓[22m[39m auto-starts a server that outlives the adapter, then cleans up after the grace period (F4, FR-D3)[33m 5619[2mms[22m[39m
+   [32m✓[39m approvals under a folder scope [2m(1)[22m
+     [33m[2m✓[22m[39m binds approvals to the directory the command will really run in, and refuses disallowed folders before asking[33m 6681[2mms[22m[39m
+ [32m✓[39m test/session.test.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 8432[2mms[22m[39m
+   [32m✓[39m shell sessions (clean profile) [2m(6)[22m
+     [33m[2m✓[22m[39m returns timed_out without killing, and the command finishes later[33m 1073[2mms[22m[39m
+     [33m[2m✓[22m[39m refuses exec while busy[33m 757[2mms[22m[39m
+   [32m✓[39m user profile [2m(1)[22m
+     [33m[2m✓[22m[39m starts the user's zsh config and runs commands[33m 790[2mms[22m[39m
+   [32m✓[39m command sessions [2m(6)[22m
+     [33m[2m✓[22m[39m reads long-running output incrementally with no gaps or duplicates[33m 2857[2mms[22m[39m
+   [32m✓[39m lifecycle and isolation [2m(4)[22m
+     [33m[2m✓[22m[39m kills the whole process tree including background jobs[33m 454[2mms[22m[39m
+   [32m✓[39m limits and options [2m(4)[22m
+     [33m[2m✓[22m[39m kills a session when its timeout_sec expires[33m 1050[2mms[22m[39m
+     [33m[2m✓[22m[39m resizes the PTY so programs see the new size[33m 605[2mms[22m[39m
+ [32m✓[39m test/unit.test.ts [2m([22m[2m45 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m83 passed[39m[22m[90m (83)[39m
+[2m   Start at [22m 17:32:41
+[2m   Duration [22m 36.02s[2m (tests 99%, import 1%)[22m
+

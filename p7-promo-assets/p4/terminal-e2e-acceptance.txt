@@ -1,0 +1,76 @@
+built test extension → /Users/wesley/Documents/manus/p4-chrome-agent/.worktrees/agent/dist-test
+
+Running 20 tests using 1 worker
+
+NFR-3 snapshot(/form?popup=1): 7 ms, 700 chars
+  ✓   1 tests/e2e/commands.spec.ts:7:1 › FR-04: reading the demo form lists fields by name, marks required and flags the open pop-up (1.7s)
+  ✓   2 tests/e2e/commands.spec.ts:29:1 › FR-04 / NFR-1: password and card values are redacted and never leave the page (853ms)
+  ✓   3 tests/e2e/commands.spec.ts:54:1 › FR-05: typing into a framework-controlled input sticks; find, scroll and press work (2.4s)
+  ✓   4 tests/e2e/form.spec.ts:22:1 › AS-2: contact form — ask once, fill with verification, approve the send, confirm submission (7.8s)
+  ✓   5 tests/e2e/form.spec.ts:47:1 › AS-3: declining the send submits nothing and ends as Stopped (6.7s)
+{
+  "probe": "ok",
+  "snapOk": true,
+  "snapHead": "URL: https://en.wikipedia.org/wiki/Main_Page\nTitle: Wikipedia, the free encyclopedia\nScroll: top (viewport 0–900 of 3827px)\nForm [e240] \"searchform\": fields Search Wikipedia [e2] (empty)\nForm [e244] \"form\": fields Small [e241] (filled), Standard [e242] (filled), Large [e243] (filled)\nForm [e247] \"form\": fields Standard [e245] (filled), Wide [e246] (filled)\n---\n[e1]<a href=/wiki/Main_Page> />\n[e2]<input type=search name=search title=Search Wikipedia [ctrl-option-f]>Search Wikipedia />\n[e3]<button>Search />\n[e4]<a href=donate.wikimedia.org/>Donate />\n[e5]<a href=/w/index.php?title=Special:Create",
+  "refCount": 239,
+  "line": "[e2]<input type=search name=search title=Search Wikipedia [ctrl-option-f]>Search Wikipedia />",
+  "typed": {
+    "ok": true,
+    "summary": "\"Search Wikipedia\" now contains 'Ada Lovelace'.",
+    "verify": {
+      "eventsObserved": [
+        "input",
+        "change"
+      ],
+      "matches": true,
+      "valueAfter": "Ada Lovelace"
+    }
+  },
+  "pressed": {
+    "ok": true,
+    "summary": "Pressed Enter in \"Search Wikipedia\". The form submit event fired.",
+    "verify": {
+      "submitFired": true
+    }
+  },
+  "effects": {
+    "navigated": true,
+    "url": "https://en.wikipedia.org/wiki/Ada_Lovelace",
+    "newText": [
+      "Contents",
+      "Hide Contents",
+      "(Top)"
+    ]
+  },
+  "title": "Ada Lovelace - Wikipedia",
+  "url": "https://en.wikipedia.org/wiki/Ada_Lovelace",
+  "quote": {
+    "data": {
+      "context": "otype of Lovelace ( c. 1843 ) [ 1 ] Born Augusta Ada Byron 10 December 1815 London, England Died 27 November 1852 (aged 36) Marylebone",
+      "found": true
+    },
+    "ok": true,
+    "summary": "Found the quote on the page and highlighted it."
+  },
+  "snap2Len": 12373,
+  "snapMs": 282
+}
+NFR-3 snapshot(Ada Lovelace article): 282 ms, 12373 chars
+  ✓   6 tests/e2e/ft1.spec.ts:5:1 › FT-1: type → submit → navigate → re-inject → read, on live Wikipedia (4.1s)
+  ✓   7 tests/e2e/lookup.spec.ts:3:1 › AS-1: Wikipedia lookup — plan, act gate, search, navigate, answer with a verified quote (5.7s)
+  ✓   8 tests/e2e/onboarding.spec.ts:3:1 › AS-11: first run shows onboarding, Run is disabled, key saves masked (1.3s)
+  -   9 tests/e2e/prod-smoke.spec.ts:7:1 › PROD: production build installs, starts, shows onboarding and holds no site access
+  ✓  10 tests/e2e/recovery.spec.ts:9:1 › AS-8: a pop-up covers the target → COVERED → close it → retry succeeds (4.0s)
+  ✓  11 tests/e2e/recovery.spec.ts:22:1 › AS-9: a re-rendered button is re-found and the step explains it (2.6s)
+  ✓  12 tests/e2e/recovery.spec.ts:32:1 › FR-03: "Always allow" survives a panel reload and Remove revokes it (4.3s)
+  ✓  13 tests/e2e/recovery.spec.ts:59:1 › AS-5: a field that reverts gives VALUE_MISMATCH and the run reports failure honestly (2.4s)
+  ✓  14 tests/e2e/recovery.spec.ts:70:1 › AS-4: an incomplete form is never submitted and no approval is asked (1.2s)
+  ✓  15 tests/e2e/safety.spec.ts:8:1 › AS-6: injected page instructions are flagged, delimited, and the risky click is gated (1.3s)
+  ✓  16 tests/e2e/safety.spec.ts:33:1 › AS-12: Stop mid-run ends the task and nothing more happens (2.0s)
+  -  17 tests/e2e/real-model.spec.ts:75:1 › RM-1: real key in onboarding, then the Wikipedia lookup with a real model
+  -  18 tests/e2e/real-model.spec.ts:90:1 › RM-2: real model fills and sends the demo contact form (asks for the missing email, waits for approval)
+  -  19 tests/e2e/real-model.spec.ts:109:1 › RM-3: real model summarises the injection page without obeying it
+  -  20 tests/e2e/real-model.spec.ts:122:1 › RM-4: real model recovers from a pop-up covering the form
+
+  5 skipped
+  15 passed (49.2s)

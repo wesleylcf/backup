@@ -1,0 +1,5 @@
+In-app Browser JS state was preserved. Completed actions were not rolled back; refresh stale UI handles and continue only the remaining work.
+{"code":"ELEMENT_AMBIGUOUS"}
+Narrow the query
+ERROR STALE_REF
+{"control":{"documentRevision":"rev_ace80aa9-c3f9-4c9a-a9e0-144a57b32619","error":{"code":"STALE_REF","retryable":true},"requiresSnapshot":true,"status":"error","tabId":"tab_e13d2342-4c35-4c4a-b291-2f918cb2dafc"},"kind":"error","schema":"manus.browser/v1"}

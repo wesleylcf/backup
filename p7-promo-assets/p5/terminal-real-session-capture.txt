@@ -1,0 +1,91 @@
+[server] termctl 0.1.0 MCP server listening on http://127.0.0.1:3062/mcp
+[server]   auth: Bearer token in /tmp/termctl-promo/state/token  ·  dashboard: termctl dashboard  ·  stop: Ctrl-C
+
+### cd + ls — terminal_exec {"command":"cd /tmp/termctl-promo/acme-app && ls"}
+{"session_id":"t-30e077","exit_code":0,"timed_out":false,"cwd":"/tmp/termctl-promo/acme-app","duration_ms":60,"truncated":false,"output_cursor":1319,"next_cursor":1641,"state":"running","shell_state":"idle","created_session":true}
+--- output ---
+README.md    build        index.html   package.json src
+
+### pwd same session — terminal_exec {"session_id":"t-30e077","command":"pwd"}
+{"session_id":"t-30e077","exit_code":0,"timed_out":false,"cwd":"/tmp/termctl-promo/acme-app","duration_ms":16,"truncated":false,"output_cursor":3009,"next_cursor":3182,"state":"running","shell_state":"idle","created_session":false}
+--- output ---
+/tmp/termctl-promo/acme-app
+
+### start dev server — terminal_create {"command":"python3 -m http.server 8765","cwd":"/tmp/termctl-promo/acme-app","name":"dev-server","wait_ms":1500}
+{"session_id":"t-b11007","name":"dev-server","kind":"command","profile":null,"backend":"pty","command":"python3 -m http.server 8765","cwd":"/tmp/termctl-promo/acme-app","initial_cwd":"/tmp/termctl-promo/acme-app","state":"running","shell_state":null,"last_exit_code":null,"exit_code":null,"signal":null,"end_reason":null,"pid":23512,"created_at":"2026-10-18T09:43:59.701Z","ended_at":null,"idle_ms":302,"total_chars":54,"buffer_start":0,"read_cursor":54,"unread_chars":0,"cols":120,"rows":40,"next_cursor":54,"has_more":false}
+--- output ---
+Serving HTTP on :: port 8765 (http://[::]:8765/) ...
+
+
+### curl the server — terminal_exec {"session_id":"t-30e077","command":"curl -s localhost:8765 | head -3"}
+{"session_id":"t-30e077","exit_code":0,"timed_out":false,"cwd":"/tmp/termctl-promo/acme-app","duration_ms":2088,"truncated":false,"output_cursor":4673,"next_cursor":4881,"state":"running","shell_state":"idle","created_session":false}
+--- output ---
+<!doctype html>
+<title>Acme</title>
+<h1>Hello from Acme</h1>
+
+### read live server output — terminal_read {"session_id":"t-b11007","wait_ms":1500}
+{"session_id":"t-b11007","cursor":54,"next_cursor":122,"dropped_chars":0,"has_more":false,"matched":null,"timed_out":false,"state":"running","shell_state":null,"exit_code":null}
+--- output ---
+::ffff:127.0.0.1 - - [18/Oct/2026 17:44:02] "GET / HTTP/1.1" 200 -
+
+
+### start python repl — terminal_create {"command":"python3","name":"python","wait_ms":1500}
+{"session_id":"t-8956d6","name":"python","kind":"command","profile":null,"backend":"pty","command":"python3","cwd":"/Users/wesley","initial_cwd":"/Users/wesley","state":"running","shell_state":null,"last_exit_code":null,"exit_code":null,"signal":null,"end_reason":null,"pid":23547,"created_at":"2026-10-18T09:44:02.607Z","ended_at":null,"idle_ms":302,"total_chars":165,"buffer_start":0,"read_cursor":165,"unread_chars":0,"cols":120,"rows":40,"next_cursor":165,"has_more":false}
+--- output ---
+Python 3.14.5 (main, May 10 2026, 10:21:34) [Clang 17.0.0 (clang-1700.6.4.2)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+
+### type into repl — terminal_write {"session_id":"t-8956d6","text":"2**100\n","wait_ms":1200}
+{"session_id":"t-8956d6","cursor":165,"next_cursor":210,"dropped_chars":0,"has_more":false,"matched":null,"timed_out":false,"state":"running","shell_state":null,"exit_code":null}
+--- output ---
+2**100
+1267650600228229401496703205376
+>>> 
+
+### ctrl+c the dev server — terminal_write {"session_id":"t-b11007","keys":["ctrl+c"],"wait_ms":1500}
+{"session_id":"t-b11007","cursor":122,"next_cursor":165,"dropped_chars":0,"has_more":false,"matched":null,"timed_out":false,"state":"exited","shell_state":null,"exit_code":0}
+--- output ---
+^C
+Keyboard interrupt received, exiting.
+
+
+### dev server status — terminal_status {"session_id":"t-b11007"}
+{"session_id":"t-b11007","name":"dev-server","kind":"command","profile":null,"backend":"pty","command":"python3 -m http.server 8765","cwd":"/tmp/termctl-promo/acme-app","initial_cwd":"/tmp/termctl-promo/acme-app","state":"exited","shell_state":null,"last_exit_code":null,"exit_code":0,"signal":null,"end_reason":"exit","pid":23512,"created_at":"2026-10-18T09:43:59.701Z","ended_at":"2026-10-18T09:44:03.155Z","idle_ms":33,"total_chars":165,"buffer_start":0,"read_cursor":165,"unread_chars":0,"cols":120,"rows":40}
+
+### risky command — terminal_exec {"session_id":"t-30e077","command":"rm -rf ./build"}
+ERROR APPROVAL_REQUIRED: This command needs the user's approval (rule "rm-recursive": Recursive delete)
+Hint: Tell the user: "termctl needs your approval to run `rm -rf ./build` in /tmp/termctl-promo/acme-app. To allow it once, run: termctl approve apr-222a24 (or open http://127.0.0.1:3062/ in a browser)". After they confirm, call terminal_exec again with the same arguments plus approval_id "apr-222a24". Never try to approve it yourself.
+{"approval_id":"apr-222a24","expires_at":"2026-10-18T09:54:03.167Z","rule":"rm-recursive"}
+
+### agent tries to approve itself — terminal_exec {"session_id":"t-30e077","command":"termctl approve apr-222a24"}
+ERROR POLICY_DENIED: Blocked by policy rule "self-approve": Agents may not approve their own requests or read the termctl token
+Hint: This command is never allowed through termctl. Do not retry or rephrase it to get around the rule; if it is genuinely needed, ask the user to run it themselves.
+{"rule":"self-approve"}
+
+WAITING FOR DASHBOARD APPROVAL of apr-222a24 (see /tmp/termctl-promo/pending.json)
+[server] [termctl] rejected 401 (missing or invalid token: no Authorization header): GET /favicon.ico host=127.0.0.1:3062 origin=-
+[server] [termctl] rejected 401 (missing or invalid token: no Authorization header): GET /favicon.ico host=127.0.0.1:3062 origin=-
+
+### retry with approval — terminal_exec {"session_id":"t-30e077","command":"rm -rf ./build","approval_id":"apr-222a24"}
+{"session_id":"t-30e077","exit_code":0,"timed_out":false,"cwd":"/tmp/termctl-promo/acme-app","duration_ms":22,"truncated":false,"output_cursor":6334,"next_cursor":6557,"state":"running","shell_state":"idle","created_session":false}
+--- output ---
+
+
+### verify — terminal_exec {"session_id":"t-30e077","command":"ls"}
+{"session_id":"t-30e077","exit_code":0,"timed_out":false,"cwd":"/tmp/termctl-promo/acme-app","duration_ms":24,"truncated":false,"output_cursor":7914,"next_cursor":8202,"state":"running","shell_state":"idle","created_session":false}
+--- output ---
+README.md    index.html   package.json src
+
+### list sessions — terminal_list {}
+{"count":3,"running":2,"limit":16,"sessions":[{"session_id":"t-30e077","name":"shell","kind":"shell","command":"/bin/zsh (user profile)","state":"running","shell_state":"idle","cwd":"/tmp/termctl-promo/acme-app","exit_code":null,"unread_chars":0,"created_at":"2026-10-18T09:43:53.246Z"},{"session_id":"t-b11007","name":"dev-server","kind":"command","command":"python3 -m http.server 8765","state":"exited","shell_state":null,"cwd":"/tmp/termctl-promo/acme-app","exit_code":0,"unread_chars":0,"created_at":"2026-10-18T09:43:59.701Z"},{"session_id":"t-8956d6","name":"python","kind":"command","command":"python3","state":"running","shell_state":null,"cwd":"/Users/wesley","exit_code":null,"unread_chars":0,"created_at":"2026-10-18T09:44:02.607Z"}]}
+
+### kill t-30e077 — terminal_kill {"session_id":"t-30e077"}
+{"session_id":"t-30e077","signal_sent":"SIGTERM","escalated":false,"already_ended":false,"status":{"session_id":"t-30e077","name":"shell","kind":"shell","profile":"user","backend":"pty","command":"/bin/zsh (user profile)","cwd":"/tmp/termctl-promo/acme-app","initial_cwd":"/Users/wesley","state":"killed","shell_state":null,"last_exit_code":0,"exit_code":1,"signal":null,"end_reason":"kill","pid":23402,"created_at":"2026-10-18T09:43:53.246Z","ended_at":"2026-10-18T09:44:41.743Z","idle_ms":7,"total_chars":9501,"buffer_start":0,"read_cursor":8202,"unread_chars":1299,"cols":120,"rows":40}}
+
+### kill t-8956d6 — terminal_kill {"session_id":"t-8956d6"}
+{"session_id":"t-8956d6","signal_sent":"SIGTERM","escalated":false,"already_ended":false,"status":{"session_id":"t-8956d6","name":"python","kind":"command","profile":null,"backend":"pty","command":"python3","cwd":"/Users/wesley","initial_cwd":"/Users/wesley","state":"killed","shell_state":null,"last_exit_code":null,"exit_code":null,"signal":"SIGTERM","end_reason":"kill","pid":23547,"created_at":"2026-10-18T09:44:02.607Z","ended_at":"2026-10-18T09:44:41.777Z","idle_ms":38806,"total_chars":210,"buffer_start":0,"read_cursor":210,"unread_chars":0,"cols":120,"rows":40}}
+
+Saved 16 steps to /Users/wesley/Documents/manus/p5-mcp-terminal/.work/promo/capture.json
+[server] termctl: SIGINT, terminating sessions…
